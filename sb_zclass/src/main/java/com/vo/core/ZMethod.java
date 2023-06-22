@@ -1,5 +1,8 @@
 package com.vo.core;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +61,7 @@ public class ZMethod {
 	private List<String> annotationList;
 	private String body;
 	private List<ZMethodArg> methodArgList;
+	private boolean gReturn = true;
 
 	public final String getReturn() {
 
@@ -115,7 +119,8 @@ public class ZMethod {
 			break;
 		}
 
-		return "return (" + rt + ") new Object();";
+		return "return null;";
+//		return "return (" + rt + ") new Object();";
 	}
 
 	@Override
@@ -186,7 +191,9 @@ public class ZMethod {
 		builder.add(NEW_LINE);
 		builder.add(this.getBody());
 		builder.add(NEW_LINE);
-		builder.add(this.getReturn());
+		if (this.isgReturn()) {
+			builder.add(this.getReturn());
+		}
 		builder.add(NEW_LINE);
 		builder.add("}");
 		builder.add(NEW_LINE);
@@ -267,5 +274,58 @@ public class ZMethod {
 
 		return this;
 	}
+
+	public boolean isgReturn() {
+		return this.gReturn;
+	}
+
+	public void setgReturn(final boolean gReturn) {
+		this.gReturn = gReturn;
+	}
+
+	public static ZMethod copyFromMethod(final Method m1) {
+		final ZMethod m2 = new ZMethod();
+		m2.setName(m1.getName());
+
+		m2.setReturnType(getReturnTypeT(m1));
+
+		final ArrayList<ZMethodArg> argLIst = getArgListFromMethod(m1);
+
+		m2.setMethodArgList(argLIst);
+
+		return m2;
+
+	}
+
+	public static ArrayList<ZMethodArg> getArgListFromMethod(final Method m1) {
+		final ArrayList<ZMethodArg> argLIst = Lists.newArrayList();
+
+		final Parameter[] parameters = m1.getParameters();
+		for (final Parameter p1 : parameters) {
+			System.out.println("\t" + p1.getType() + "\t" + p1.getName());
+
+			final ZMethodArg arg = new ZMethodArg(p1.getType(), p1.getName());
+
+			argLIst.add(arg);
+
+		}
+		return argLIst;
+	}
+
+	public static String getReturnTypeT(final Method method) {
+		final Type genericReturnType = method.getGenericReturnType();
+		final String string = genericReturnType.toString();
+		final int i = string.indexOf("class");
+		if (i > -1) {
+
+			return string.substring("class".length() + i);
+		}
+		return string;
+	}
+
+//	public static String getReturnTypeT(final Method method) {
+//		final Type genericReturnType = method.getGenericReturnType();
+//		return genericReturnType.toString();
+//	}
 
 }

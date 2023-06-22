@@ -1,16 +1,17 @@
 package com.vo.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.concurrent.ConcurrentMap;
-
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.UUID;
@@ -68,10 +69,20 @@ public class ZClass {
 
 	private Set<String> implementsSet;
 
+	private Set<ZField> fieldSet;
 
+	private String superClass;
 	private String body;
 
 	private Set<ZMethod> methodSet;
+
+	public void addField(final ZField zField) {
+		if (this.getFieldSet() == null) {
+			this.setFieldSet(Sets.newHashSet());
+		}
+
+		this.getFieldSet().add(zField);
+	}
 
 	@Override
 	public String toString() {
@@ -96,7 +107,7 @@ public class ZClass {
 		final Set<String> aSet = this.getAnnotationSet();
 		if (CollUtil.isNotEmpty(aSet)) {
 			for (final String annotation : aSet) {
-				builder.append(annotation).append(ZClass.NEW_LINE);
+				builder.append("@").append(annotation).append(ZClass.NEW_LINE);
 			}
 		}
 
@@ -109,6 +120,11 @@ public class ZClass {
 
 		builder.append(StrUtil.isEmpty(name2) ? ZClass.generateDefaultClassName() : name2);
 
+		final String sc = this.getSuperClass();
+		if(StrUtil.isNotEmpty(sc)) {
+			builder.append(" extends ").append(sc);
+		}
+
 		if (CollUtil.isNotEmpty(this.implementsSet)) {
 			final StringJoiner joiner = new StringJoiner(",");
 			builder.append(ZClass.IMPLEMENTS);
@@ -119,6 +135,16 @@ public class ZClass {
 		}
 
 		builder.append('{').append(ZClass.NEW_LINE);
+
+		// 字段
+		final Set<ZField> fs = this.getFieldSet();
+		if (CollUtil.isNotEmpty(fs)) {
+			for (final ZField zf : fs) {
+//				final String fS = zf.getType().getCanonicalName() + " " + zf.getName() + ";";
+				builder.append(zf.toString()).append(NEW_LINE);
+			}
+		}
+
 		builder.append(this.getBody()).append(ZClass.NEW_LINE);
 
 		final Set<ZMethod> zMethodSet = this.getMethodSet();
@@ -248,4 +274,32 @@ public class ZClass {
 		return null;
 	}
 
+	public String getSimpleName() {
+		final String name2 = this.getName();
+		final int i = name2.indexOf("<");
+		if(i <= -1) {
+			return name2;
+		}
+		final int i2 = name2.lastIndexOf(">");
+		if(i2 > i) {
+			final String n2 = name2.substring(0,i);
+			return n2;
+		}
+
+
+		return name2;
+	}
+
+// FIXME 2023年6月15日 下午3:13:23 zhanghen: 测试此方法
+	public void writeToFile(final File file) {
+		try {
+			final String s = this.toString();
+			final BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(s);
+			writer.flush();
+			writer.close();
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
