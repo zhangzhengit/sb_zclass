@@ -11,11 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023年6月11日
  *
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class SbZClassApplication {
 
 	public static void main(final String[] args) {
-		SpringApplication.run(SbZClassApplication.class, args);
+//		SpringApplication.run(SbZClassApplication.class, args);
 	}
 
 }
