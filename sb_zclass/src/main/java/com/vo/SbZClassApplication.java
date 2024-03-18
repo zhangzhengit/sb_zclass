@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SbZClassApplication {
 
 	public static void main(final String[] args) {
-//		SpringApplication.run(SbZClassApplication.class, args);
+		SpringApplication.run(SbZClassApplication.class, args);
 	}
 
 }
