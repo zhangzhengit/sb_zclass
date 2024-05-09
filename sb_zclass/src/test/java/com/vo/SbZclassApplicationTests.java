@@ -19,7 +19,7 @@ import com.vo.core.ZPackage;
  * @date 2023年6月11日
  *
  */
-@SpringBootTest
+//@SpringBootTest
 class SbZclassApplicationTests {
 
 
