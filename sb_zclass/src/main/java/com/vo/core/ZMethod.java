@@ -49,7 +49,7 @@ public class ZMethod {
 	public static final String METHOD_NAME_PREFIX = "method_";
 
 	private static final String VOID = "void";
-// FIXME 2021-12-10 18:55:05 zhangzhen :  继续加字段，参照java.lang.reflect.Modifier类
+	// FIXME 2021-12-10 18:55:05 zhangzhen :  继续加字段，参照java.lang.reflect.Modifier类
 
 	private ZMethodAccessEnum accessRights;
 	private boolean isFinal;
@@ -120,7 +120,7 @@ public class ZMethod {
 		}
 
 		return "return null;";
-//		return "return (" + rt + ") new Object();";
+		//		return "return (" + rt + ") new Object();";
 	}
 
 	@Override
@@ -175,16 +175,16 @@ public class ZMethod {
 		builder.add(")");
 
 		// 1
-//		builder.add("(");
-//		final List<String> a = this.getArgList();
-//		if (CollUtil.isNotEmpty(a)) {
-//			final StringJoiner aj = new StringJoiner(",");
-//			for (final String string : a) {
-//				aj.add(string);
-//			}
-//			builder.add(aj.toString());
-//		}
-//		builder.add(")");
+		//		builder.add("(");
+		//		final List<String> a = this.getArgList();
+		//		if (CollUtil.isNotEmpty(a)) {
+		//			final StringJoiner aj = new StringJoiner(",");
+		//			for (final String string : a) {
+		//				aj.add(string);
+		//			}
+		//			builder.add(aj.toString());
+		//		}
+		//		builder.add(")");
 
 
 		builder.add("{");
@@ -302,12 +302,8 @@ public class ZMethod {
 
 		final Parameter[] parameters = m1.getParameters();
 		for (final Parameter p1 : parameters) {
-			System.out.println("\t" + p1.getType() + "\t" + p1.getName());
-
 			final ZMethodArg arg = new ZMethodArg(p1.getType(), p1.getName());
-
 			argLIst.add(arg);
-
 		}
 		return argLIst;
 	}
@@ -323,9 +319,9 @@ public class ZMethod {
 		return string;
 	}
 
-//	public static String getReturnTypeT(final Method method) {
-//		final Type genericReturnType = method.getGenericReturnType();
-//		return genericReturnType.toString();
-//	}
+	//	public static String getReturnTypeT(final Method method) {
+	//		final Type genericReturnType = method.getGenericReturnType();
+	//		return genericReturnType.toString();
+	//	}
 
 }
