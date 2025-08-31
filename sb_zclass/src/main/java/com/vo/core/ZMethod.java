@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-import com.google.common.collect.Lists;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
@@ -224,7 +222,7 @@ public class ZMethod {
 	public void addAnnotation(final String annotationString) {
 		final List<String> al = this.getAnnotationList();
 		if (al == null) {
-			this.setAnnotationList(Lists.newArrayList());
+			this.setAnnotationList(new ArrayList());
 		}
 
 		this.getAnnotationList().add(annotationString);
@@ -298,7 +296,7 @@ public class ZMethod {
 	}
 
 	public static ArrayList<ZMethodArg> getArgListFromMethod(final Method m1) {
-		final ArrayList<ZMethodArg> argLIst = Lists.newArrayList();
+		final ArrayList<ZMethodArg> argLIst = new ArrayList<>();
 
 		final Parameter[] parameters = m1.getParameters();
 		for (final Parameter p1 : parameters) {

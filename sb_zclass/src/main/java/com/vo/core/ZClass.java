@@ -6,12 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
 
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Sets;
+//import com.google.common.collect.HashBiMap;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.UUID;
@@ -36,7 +38,9 @@ public class ZClass {
 
 	private static final String DEAULT_ZCLASS_NAME_PREFIX = "ZClass_";
 
-	private final static HashBiMap<ZClass, Object> SOURCE_MAP = HashBiMap.create();
+	private final static Map<ZClass, Object> SOURCE_MAP_CLASS_TO_O =new HashMap<>();
+	private final static Map< Object, ZClass> SOURCE_MAP_O_TO_CLASS = new HashMap<>();
+//	private final static HashBiMap<ZClass, Object> SOURCE_MAP = HashBiMap.create();
 
 	private static final String DEFAULT_PACKAGE = "com.vo";
 
@@ -78,7 +82,7 @@ public class ZClass {
 
 	public void addField(final ZField zField) {
 		if (this.getFieldSet() == null) {
-			this.setFieldSet(Sets.newHashSet());
+			this.setFieldSet(new HashSet());
 		}
 
 		this.getFieldSet().add(zField);
@@ -187,7 +191,13 @@ public class ZClass {
 		final String source = this.toString();
 		try {
 			final Object newInstance = ZCU.newInstance(source);
-			ZClass.SOURCE_MAP.put(this, newInstance);
+			
+			// 2
+			SOURCE_MAP_CLASS_TO_O.put(this, newInstance);
+			SOURCE_MAP_O_TO_CLASS.put(newInstance, this);
+			
+			// 1
+//			ZClass.SOURCE_MAP.put(this, newInstance);
 			return newInstance;
 		} catch (SecurityException | IllegalArgumentException e) {
 			e.printStackTrace();
@@ -198,7 +208,12 @@ public class ZClass {
 
 	public static ZClass getZClassByObject(final Object object) {
 
-		final ZClass zClass = SOURCE_MAP.inverse().get(object);
+		// 2
+		ZClass zClass = SOURCE_MAP_O_TO_CLASS.get(object);
+		
+//		final ZClass zClass = SOURCE_MAP.inverse().get(object);
+		// 1
+//		final ZClass zClass = SOURCE_MAP.inverse().get(object);
 		return zClass;
 	}
 
