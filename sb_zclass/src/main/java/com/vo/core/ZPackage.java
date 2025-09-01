@@ -1,8 +1,6 @@
 package com.vo.core;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Package声明
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
  * @date 2021-12-10 18:59:27
  *
  */
-@Data
-@NoArgsConstructor
 public class ZPackage {
 
 	private static final String PACKAGE = "package ";
@@ -41,6 +37,14 @@ public class ZPackage {
 	@Override
 	public String toString() {
 		return this.getPackageString();
+	}
+
+	public String getPackageString() {
+		return packageString;
+	}
+
+	public ZPackage() {
+		super();
 	}
 
 }

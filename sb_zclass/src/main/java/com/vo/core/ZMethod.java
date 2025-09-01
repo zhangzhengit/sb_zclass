@@ -11,10 +11,6 @@ import java.util.StringJoiner;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * java的method
@@ -23,10 +19,6 @@ import lombok.NoArgsConstructor;
  * @date 2021-12-10 18:51:05
  *
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class ZMethod {
 
 	/**
@@ -317,9 +309,122 @@ public class ZMethod {
 		return string;
 	}
 
-	//	public static String getReturnTypeT(final Method method) {
-	//		final Type genericReturnType = method.getGenericReturnType();
-	//		return genericReturnType.toString();
-	//	}
+	public ZMethodAccessEnum getAccessRights() {
+		return accessRights;
+	}
+
+	public void setAccessRights(final ZMethodAccessEnum accessRights) {
+		this.accessRights = accessRights;
+	}
+
+	public boolean isFinal() {
+		return isFinal;
+	}
+
+	public void setFinal(final boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(final boolean isStatic) {
+		this.isStatic = isStatic;
+	}
+
+	public boolean isSynchronized() {
+		return isSynchronized;
+	}
+
+	public void setSynchronized(final boolean isSynchronized) {
+		this.isSynchronized = isSynchronized;
+	}
+
+	public boolean isAbstract() {
+		return isAbstract;
+	}
+
+	public void setAbstract(final boolean isAbstract) {
+		this.isAbstract = isAbstract;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public List<String> getAnnotationList() {
+		return annotationList;
+	}
+
+	public void setAnnotationList(final List<String> annotationList) {
+		this.annotationList = annotationList;
+	}
+
+	public List<ZMethodArg> getMethodArgList() {
+		return methodArgList;
+	}
+
+	public void setMethodArgList(final List<ZMethodArg> methodArgList) {
+		this.methodArgList = methodArgList;
+	}
+
+	public void setReturnType(final String returnType) {
+		this.returnType = returnType;
+	}
+
+	public void setBody(final String body) {
+		this.body = body;
+	}
+
+	public ZMethod(final ZMethodAccessEnum accessRights, final boolean isFinal, final boolean isStatic, final boolean isSynchronized,
+			final boolean isAbstract, final String returnType, final String name, final List<String> annotationList, final String body,
+			final List<ZMethodArg> methodArgList, final boolean gReturn) {
+		super();
+		this.accessRights = accessRights;
+		this.isFinal = isFinal;
+		this.isStatic = isStatic;
+		this.isSynchronized = isSynchronized;
+		this.isAbstract = isAbstract;
+		this.returnType = returnType;
+		this.name = name;
+		this.annotationList = annotationList;
+		this.body = body;
+		this.methodArgList = methodArgList;
+		this.gReturn = gReturn;
+	}
+
+	public ZMethod() {
+		super();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accessRights, annotationList, body, gReturn, isAbstract, isFinal, isStatic, isSynchronized,
+				methodArgList, name, returnType);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ZMethod other = (ZMethod) obj;
+		return accessRights == other.accessRights && Objects.equals(annotationList, other.annotationList)
+				&& Objects.equals(body, other.body) && gReturn == other.gReturn && isAbstract == other.isAbstract
+				&& isFinal == other.isFinal && isStatic == other.isStatic && isSynchronized == other.isSynchronized
+				&& Objects.equals(methodArgList, other.methodArgList) && Objects.equals(name, other.name)
+				&& Objects.equals(returnType, other.returnType);
+	}
 
 }

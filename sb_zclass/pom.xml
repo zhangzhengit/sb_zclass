@@ -28,8 +28,6 @@
 			<version>2.4.13</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		
 		<!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
 		<dependency>
 			<groupId>cn.hutool</groupId>
@@ -37,12 +35,6 @@
 			  <version>5.8.25</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
 
 	<build>
