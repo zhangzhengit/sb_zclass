@@ -13,15 +13,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
 
-//import com.google.common.collect.HashBiMap;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 表示java class对象
@@ -30,10 +24,6 @@ import lombok.NoArgsConstructor;
  * @date 2021-12-10 18:50:33
  *
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class ZClass {
 
 	private static final String DEAULT_ZCLASS_NAME_PREFIX = "ZClass_";
@@ -209,7 +199,7 @@ public class ZClass {
 	public static ZClass getZClassByObject(final Object object) {
 
 		// 2
-		ZClass zClass = SOURCE_MAP_O_TO_CLASS.get(object);
+		final ZClass zClass = SOURCE_MAP_O_TO_CLASS.get(object);
 		
 //		final ZClass zClass = SOURCE_MAP.inverse().get(object);
 		// 1
@@ -317,4 +307,126 @@ public class ZClass {
 			e.printStackTrace();
 		}
 	}
+
+	public ZClass(final ZPackage package1, final Set<String> importSet, final Set<String> annotationSet, final ZMethodAccessEnum accessRights,
+			final String name, final Set<String> implementsSet, final Set<ZField> fieldSet, final String superClass, final String body,
+			final Set<ZMethod> methodSet) {
+		super();
+		this.package1 = package1;
+		this.importSet = importSet;
+		this.annotationSet = annotationSet;
+		this.accessRights = accessRights;
+		this.name = name;
+		this.implementsSet = implementsSet;
+		this.fieldSet = fieldSet;
+		this.superClass = superClass;
+		this.body = body;
+		this.methodSet = methodSet;
+	}
+
+	public ZClass() {
+		super();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accessRights, annotationSet, body, fieldSet, implementsSet, importSet, methodSet, name,
+				package1, superClass);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ZClass other = (ZClass) obj;
+		return accessRights == other.accessRights && Objects.equals(annotationSet, other.annotationSet)
+				&& Objects.equals(body, other.body) && Objects.equals(fieldSet, other.fieldSet)
+				&& Objects.equals(implementsSet, other.implementsSet) && Objects.equals(importSet, other.importSet)
+				&& Objects.equals(methodSet, other.methodSet) && Objects.equals(name, other.name)
+				&& Objects.equals(package1, other.package1) && Objects.equals(superClass, other.superClass);
+	}
+
+	public ZPackage getPackage1() {
+		return package1;
+	}
+
+	public void setPackage1(final ZPackage package1) {
+		this.package1 = package1;
+	}
+
+	public Set<String> getImportSet() {
+		return importSet;
+	}
+
+	public void setImportSet(final Set<String> importSet) {
+		this.importSet = importSet;
+	}
+
+	public Set<String> getAnnotationSet() {
+		return annotationSet;
+	}
+
+	public void setAnnotationSet(final Set<String> annotationSet) {
+		this.annotationSet = annotationSet;
+	}
+
+	public ZMethodAccessEnum getAccessRights() {
+		return accessRights;
+	}
+
+	public void setAccessRights(final ZMethodAccessEnum accessRights) {
+		this.accessRights = accessRights;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public Set<String> getImplementsSet() {
+		return implementsSet;
+	}
+
+	public void setImplementsSet(final Set<String> implementsSet) {
+		this.implementsSet = implementsSet;
+	}
+
+	public Set<ZField> getFieldSet() {
+		return fieldSet;
+	}
+
+	public void setFieldSet(final Set<ZField> fieldSet) {
+		this.fieldSet = fieldSet;
+	}
+
+	public String getSuperClass() {
+		return superClass;
+	}
+
+	public void setSuperClass(final String superClass) {
+		this.superClass = superClass;
+	}
+
+	public Set<ZMethod> getMethodSet() {
+		return methodSet;
+	}
+
+	public void setMethodSet(final Set<ZMethod> methodSet) {
+		this.methodSet = methodSet;
+	}
+
+	public void setBody(final String body) {
+		this.body = body;
+	}
+	
 }
