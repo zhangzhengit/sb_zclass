@@ -46,7 +46,10 @@ public class ZField {
 			}
 		}
 
-		final StringBuilder append = builder.append(this.getType()).append( " ") .append(this.getName()).append(" = ").append(this.getValue()).append(";");
+		final StringBuilder append = builder.append(this.getType()).append( " ") 
+				.append(this.getName()).append(" = ")
+				.append("(").append(this.getType()).append(")")
+				.append(this.getValue()).append(";");
 
 //		final String s = this.getType() + " " + this.getName() + " = " + this.getValue() + ";";
 		return append.toString();

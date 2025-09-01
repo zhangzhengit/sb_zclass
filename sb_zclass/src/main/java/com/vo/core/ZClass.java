@@ -179,7 +179,8 @@ public class ZClass {
 	public Object newInstance() {
 		final String source = this.toString();
 		try {
-			final Object newInstance = ZCU.newInstance(source);
+			final ZPackage package12 = this.getPackage1();
+			final Object newInstance = ZCU.newInstance(source, package12.toString(), this.getName());
 			
 			// 2
 			SOURCE_MAP_CLASS_TO_O.put(this, newInstance);
