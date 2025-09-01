@@ -2,10 +2,7 @@ package com.vo.core;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 /**
  * ZClass的字段，使用toString 获取结果
@@ -14,9 +11,6 @@ import lombok.NoArgsConstructor;
  * @date 2023年6月16日
  *
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ZField {
 
 	private String type;
@@ -62,6 +56,71 @@ public class ZField {
 		this.type = type;
 		this.name = name;
 		this.value = value;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public void setValue(final Object value) {
+		this.value = value;
+	}
+
+	public List<String> getAnnoList() {
+		return annoList;
+	}
+
+	public void setAnnoList(final List<String> annoList) {
+		this.annoList = annoList;
+	}
+
+	public ZField(final String type, final String name, final Object value, final List<String> annoList) {
+		super();
+		this.type = type;
+		this.name = name;
+		this.value = value;
+		this.annoList = annoList;
+	}
+
+	public ZField() {
+		super();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(annoList, name, type, value);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ZField other = (ZField) obj;
+		return Objects.equals(annoList, other.annoList) && Objects.equals(name, other.name)
+				&& Objects.equals(type, other.type) && Objects.equals(value, other.value);
 	}
 
 }
