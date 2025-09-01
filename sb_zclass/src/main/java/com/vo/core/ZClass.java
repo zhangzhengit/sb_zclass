@@ -12,10 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.UUID;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.StrUtil;
 
 /**
  * 表示java class对象
@@ -90,7 +88,7 @@ public class ZClass {
 
 		builder.append(ZClass.NEW_LINE);
 
-		if (CollUtil.isNotEmpty(this.importSet)) {
+		if (CU.isNotEmpty(this.importSet)) {
 			for (final String im : this.importSet) {
 				builder.append(ZClass.IMPORT).append(im).append(';').append(ZClass.NEW_LINE);
 			}
@@ -99,7 +97,7 @@ public class ZClass {
 		}
 
 		final Set<String> aSet = this.getAnnotationSet();
-		if (CollUtil.isNotEmpty(aSet)) {
+		if (CU.isNotEmpty(aSet)) {
 			for (final String annotation : aSet) {
 				builder.append("@").append(annotation).append(ZClass.NEW_LINE);
 			}
@@ -112,14 +110,15 @@ public class ZClass {
 		builder.append(ZClass.CLASS);
 		final String name2 = this.getName();
 
-		builder.append(StrUtil.isEmpty(name2) ? ZClass.generateDefaultClassName() : name2);
+		
+		builder.append(SCU.isEmpty(name2) ? ZClass.generateDefaultClassName() : name2);
 
 		final String sc = this.getSuperClass();
-		if(StrUtil.isNotEmpty(sc)) {
+		if(SCU.isNotEmpty(sc)) {
 			builder.append(" extends ").append(sc);
 		}
 
-		if (CollUtil.isNotEmpty(this.implementsSet)) {
+		if (CU.isNotEmpty(this.implementsSet)) {
 			final StringJoiner joiner = new StringJoiner(",");
 			builder.append(ZClass.IMPLEMENTS);
 			for (final String impl : this.implementsSet) {
@@ -132,7 +131,7 @@ public class ZClass {
 
 		// 字段
 		final Set<ZField> fs = this.getFieldSet();
-		if (CollUtil.isNotEmpty(fs)) {
+		if (CU.isNotEmpty(fs)) {
 			for (final ZField zf : fs) {
 //				final String fS = zf.getType().getCanonicalName() + " " + zf.getName() + ";";
 				builder.append(zf.toString()).append(NEW_LINE);
@@ -142,7 +141,7 @@ public class ZClass {
 		builder.append(this.getBody()).append(ZClass.NEW_LINE);
 
 		final Set<ZMethod> zMethodSet = this.getMethodSet();
-		if (CollUtil.isNotEmpty(zMethodSet)) {
+		if (CU.isNotEmpty(zMethodSet)) {
 			for (final ZMethod zm : zMethodSet) {
 				if (zm.isAbstract() ) {
 					throw new IllegalArgumentException("非abstract类不允许有abstract方法");
@@ -170,7 +169,7 @@ public class ZClass {
 	}
 
 	public String getBody() {
-		if (StrUtil.isEmpty(this.body)) {
+		if (SCU.isEmpty(this.body)) {
 			return "";
 		}
 

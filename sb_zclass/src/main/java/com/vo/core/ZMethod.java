@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
-
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.UUID;
-import cn.hutool.core.util.StrUtil;
+import java.util.UUID;
 
 /**
  * java的method
@@ -118,7 +115,7 @@ public class ZMethod {
 		final StringJoiner builder = new StringJoiner(SPACE, SPACE, SPACE);
 
 		final List<String> al = this.getAnnotationList();
-		if (CollUtil.isNotEmpty(al)) {
+		if (CU.isNotEmpty(al)) {
 			for (final String a : al) {
 				builder.add(a);
 			}
@@ -148,13 +145,13 @@ public class ZMethod {
 		builder.add(this.getReturnType());
 		final String n = this.getName();
 
-		builder.add(StrUtil.isEmpty(n) ? ZMethod.generateDefaultMethodName() : n);
+		builder.add(SCU.isEmpty(n) ? ZMethod.generateDefaultMethodName() : n);
 
 		// FIXME 2023年6月11日 下午7:24:06 zhanghen:
 		// 2 开始
 		builder.add("(");
 		final List<ZMethodArg> mal = this.getMethodArgList();
-		if (CollUtil.isNotEmpty(mal)) {
+		if (CU.isNotEmpty(mal)) {
 			final StringJoiner aj = new StringJoiner(",");
 			for (final ZMethodArg ma : mal) {
 				aj.add(ma.toString());
@@ -167,7 +164,7 @@ public class ZMethod {
 		// 1
 		//		builder.add("(");
 		//		final List<String> a = this.getArgList();
-		//		if (CollUtil.isNotEmpty(a)) {
+		//		if (CU.isNotEmpty(a)) {
 		//			final StringJoiner aj = new StringJoiner(",");
 		//			for (final String string : a) {
 		//				aj.add(string);
@@ -197,7 +194,7 @@ public class ZMethod {
 	}
 
 	public String getBody() {
-		if (StrUtil.isEmpty(this.body)) {
+		if (SCU.isEmpty(this.body)) {
 			return "";
 		}
 		return this.body;
@@ -256,7 +253,7 @@ public class ZMethod {
 	public ZMethod methodArg(final ZMethodArg methodArg) {
 
 		final List<ZMethodArg> ma = this.getMethodArgList();
-		if (CollUtil.isEmpty(ma)) {
+		if (CU.isEmpty(ma)) {
 			this.setMethodArgList(new ArrayList<>());
 		}
 

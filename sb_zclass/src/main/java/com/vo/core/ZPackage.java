@@ -1,7 +1,5 @@
 package com.vo.core;
 
-import cn.hutool.core.util.StrUtil;
-
 /**
  * Package声明
  *
@@ -23,7 +21,7 @@ public class ZPackage {
 	}
 
 	public void setPackageString(final String packageString) {
-		if (StrUtil.isBlank(packageString)) {
+		if (SCU.isBlank(packageString)) {
 			this.packageString = packageString;
 			return;
 		}
