@@ -67,6 +67,7 @@ public class ZClass {
 	private String body;
 
 	private Set<ZMethod> methodSet;
+	private Set<String> methodSetString;
 
 	public void addField(final ZField zField) {
 		if (this.getFieldSet() == null) {
@@ -151,6 +152,15 @@ public class ZClass {
 				builder.append(zm.toString());
 			}
 		}
+		
+		final Set<String> sss = this.getMethodSetString();
+		if (CU.isNotEmpty(sss)) {
+			for (final String ms : sss) {
+				builder.append(ms);
+			}
+			builder.append(NEW_LINE);
+		}
+		
 
 		builder.append('}');
 
@@ -425,7 +435,28 @@ public class ZClass {
 	public Set<ZMethod> getMethodSet() {
 		return methodSet;
 	}
+	
+	public Set<String> getMethodSetString() {
+		return methodSetString;
+	}
 
+	
+	/**
+	 * 添加一个String形式的Method
+	 * 
+	 * @param methodString	
+	 * 		String形式的java Method，如：
+	 * 
+	 * 	 public void hello() { 
+	 * 		System.out.println("hello"); 
+	 * 	 }
+	 */
+	public void addMethod(final String methodString) {
+		if (this.methodSetString == null) {
+			this.methodSetString = new HashSet<>();
+		}
+		this.methodSetString.add(methodString);
+	}
 	
 	public void addMethod(final ZMethod method) {
 		if (this.methodSet == null) {
