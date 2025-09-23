@@ -28,6 +28,7 @@ public class ZCU {
 		final SimpleCompiler compiler = new SimpleCompiler();
 		try {
 			compiler.cook(source);
+			
 
 			final String cN = package1.substring(package1.indexOf(PACKAGE) + PACKAGE.length()) + "." + className;
 			final Class<?> cls = compiler.getClassLoader().loadClass(cN);

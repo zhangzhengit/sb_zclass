@@ -70,7 +70,7 @@ public class ZClass {
 
 	public void addField(final ZField zField) {
 		if (this.getFieldSet() == null) {
-			this.setFieldSet(new HashSet());
+			this.setFieldSet(new HashSet<ZField>());
 		}
 
 		this.getFieldSet().add(zField);
@@ -110,8 +110,9 @@ public class ZClass {
 		builder.append(ZClass.CLASS);
 		final String name2 = this.getName();
 
-		
-		builder.append(SCU.isEmpty(name2) ? ZClass.generateDefaultClassName() : name2);
+		final String gName = SCU.isEmpty(name2) ? ZClass.generateDefaultClassName() : name2;
+		builder.append(gName);
+		this.setName(gName);
 
 		final String sc = this.getSuperClass();
 		if(SCU.isNotEmpty(sc)) {
@@ -127,6 +128,7 @@ public class ZClass {
 			builder.append(joiner);
 		}
 
+		builder.append(" ");
 		builder.append('{').append(ZClass.NEW_LINE);
 
 		// 字段
@@ -180,6 +182,9 @@ public class ZClass {
 		final String source = this.toString();
 		try {
 			final ZPackage package12 = this.getPackage1();
+			if (package12 == null) {
+				throw new IllegalArgumentException("package 未定义，请声明一个 " + ZPackage.class.getName() + " 对象");
+			}
 			final Object newInstance = ZCU.newInstance(source, package12.toString(), this.getName());
 			
 			// 2
@@ -421,6 +426,14 @@ public class ZClass {
 		return methodSet;
 	}
 
+	
+	public void addMethod(final ZMethod method) {
+		if (this.methodSet == null) {
+			this.methodSet = new HashSet<>();
+		}
+		this.methodSet.add(method);
+	}
+	
 	public void setMethodSet(final Set<ZMethod> methodSet) {
 		this.methodSet = methodSet;
 	}
