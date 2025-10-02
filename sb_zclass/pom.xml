@@ -4,7 +4,7 @@
 
 	<groupId>com.vo</groupId>
 	<artifactId>sb_zclass</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT-jdk8</version>
 	<name>sb_zclass</name>
 	<description>运行时动态构造字符串形式的java源码，并且动态编译出java对象</description>
 
